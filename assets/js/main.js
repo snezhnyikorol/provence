@@ -13,6 +13,8 @@ $(window).scroll(function(){
   else {
     sticky.removeClass('fixed');
   } 
+
+  check()
 });
 
 let rus = {};
@@ -640,10 +642,12 @@ function loadScript(url, callback){
   document.getElementsByTagName("head")[0].appendChild(script);
 }
  
-// Основная функция, которая проверяет когда мы навели на блок с классом &#34;ymap-container&#34;
-var ymap = function() {
-  $('.ymap-container').mouseenter(function(){
-      if (!check_if_load) { // проверяем первый ли раз загружается Яндекс.Карта, если да, то загружаем
+
+function checkMap() {
+  console.log(document.getElementById('navigation').getBoundingClientRect().y, document.documentElement.clientHeight)
+  if (document.getElementById('navigation').getBoundingClientRect().y < document.documentElement.clientHeight) {
+    
+    if (!check_if_load) { // проверяем первый ли раз загружается Яндекс.Карта, если да, то загружаем
  
 	  	// Чтобы не было повторной загрузки карты, мы изменяем значение переменной
         check_if_load = true; 
@@ -657,13 +661,10 @@ var ymap = function() {
            ymaps.load(init);
         });                
       }
-    }
-  );  
+  }
 }
- 
-$(function() {
- 
-  //Запускаем основную функцию
-  ymap();
- 
-});
+
+function check() {
+  // checkReview()
+  checkMap()
+}
