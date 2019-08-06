@@ -352,7 +352,8 @@ function translateWidget(to) {
     rus['option'] = $('.rc-search_form__item__guests__control option:eq(8)').text();
     $('.rc-search_form__item__guests__control option:eq(8)').text('more than 9');
     rus['rc-search_form__search_btn'] = $(".rc-search_form__search_btn").text()
-    translateFlat(lang)
+    setTimeout(function() {translateFlat(lang)}, 1000)
+
     $(".rc-search_form__search_btn").text('Search') 
   }else if (to == 'rus') {
 
@@ -361,7 +362,7 @@ function translateWidget(to) {
     $("[for=guests]").html(rus['guests'] )
     $('.rc-search_form__item__guests__control option:eq(8)').text(rus['option']);
     $(".rc-search_form__search_btn").text(rus['rc-search_form__search_btn'])
-    translateFlat(lang)
+    setTimeout(function() {translateFlat(lang)}, 1000)
   }
     
 
