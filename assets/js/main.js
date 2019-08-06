@@ -566,19 +566,19 @@ video2.addEventListener('ended', () => {
 
 
 
-//Переменная для включения/отключения индикатора загрузки
+
 var spinner = $('.ymap-container').children('.loader');
-//Переменная для определения была ли хоть раз загружена Яндекс.Карта (чтобы избежать повторной загрузки при наведении)
+
 var check_if_load = false;
-//Необходимые переменные для того, чтобы задать координаты на Яндекс.Карте
+
 var myMapTemp, myPlacemarkTemp;
  
-//Функция создания карты сайта и затем вставки ее в блок с идентификатором &#34;map-yandex&#34;
+
 function init () {
   var myMapTemp = new ymaps.Map("map-yandex", {
-    center: [59.922097, 30.343006], // координаты центра на карте
-    zoom: 12, // коэффициент приближения карты
-    controls: ['zoomControl', 'fullscreenControl'], // выбираем только те функции, которые необходимы при использовании
+    center: [59.922097, 30.343006], 
+    zoom: 12, 
+    controls: ['zoomControl', 'fullscreenControl'],
   });
   myMapTemp.behaviors.disable('scrollZoom');
   var myPlacemarkTemp = new ymaps.Placemark([59.922097, 30.343006], {
@@ -589,17 +589,17 @@ function init () {
 
   myMapTemp.geoObjects.add(myPlacemarkTemp)
  
-  // Получаем первый экземпляр коллекции слоев, потом первый слой коллекции
+  
   var layer = myMapTemp.layers.get(0).get(0);
  
-  // Решение по callback-у для определения полной загрузки карты
+ 
   waitForTilesLoad(layer).then(function() {
-    // Скрываем индикатор загрузки после полной загрузки карты
+ 
     spinner.removeClass('is-active');
   });
 }
  
-// Функция для определения полной загрузки карты (на самом деле проверяется загрузка тайлов) 
+
 function waitForTilesLoad(layer) {
   return new ymaps.vow.Promise(function (resolve, reject) {
     var tc = getTileContainer(layer), readyAll = true;
@@ -632,7 +632,7 @@ function getTileContainer(layer) {
   return null;
 }
  
-// Функция загрузки API Яндекс.Карт по требованию (в нашем случае при наведении)
+
 function loadScript(url, callback){
   var script = document.createElement("script");
  
@@ -658,17 +658,17 @@ function loadScript(url, callback){
 function checkMap() {
   if (document.getElementById('navigation').getBoundingClientRect().y < document.documentElement.clientHeight) {
     
-    if (!check_if_load) { // проверяем первый ли раз загружается Яндекс.Карта, если да, то загружаем
+    if (!check_if_load) { 
  
-	  	// Чтобы не было повторной загрузки карты, мы изменяем значение переменной
+	  	
         check_if_load = true; 
  
-		// Показываем индикатор загрузки до тех пор, пока карта не загрузится
+		
         spinner.addClass('is-active');
  
-		// Загружаем API Яндекс.Карт
+	
         loadScript("https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;loadByRequire=1", function(){
-           // Как только API Яндекс.Карт загрузились, сразу формируем карту и помещаем в блок с идентификатором &#34;map-yandex&#34;
+  
            ymaps.load(init);
         });                
       }
@@ -685,25 +685,6 @@ function checkReview() {
     script.src = 'https://apps.elfsight.com/p/platform.js';
     document.getElementsByTagName("head")[0].appendChild(script);
     ifReviewLoad = true;
-    if (script.readyState){  // IE
-      script.onreadystatechange = function(){
-        if (script.readyState == "loaded" ||
-                script.readyState == "complete"){
-          script.onreadystatechange = null;
-  
-          // if (lang == 'eng') {
-          //   translateReview('eng')
-          // }
-        }
-      };
-    } else {  // Другие браузеры
-      script.onload = function(){
-        // if (lang == 'eng') {
-        //   translateReview('eng')
-        // }
-      };
-    }
-
   }
 }
 

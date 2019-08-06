@@ -1045,7 +1045,7 @@ footer a, footer p {
 	border: none;
 }
 
-/* &#34;Блок-обертка&#34;, где мы задаем фоновое изображение скриншотом как на карте */
+
 .ymap-container {
 	position: relative;
 	margin: 3em 0 2em 0;
@@ -1057,7 +1057,7 @@ footer a, footer p {
 	box-shadow: 0 0 2em  0 rgba(0,0,0,.2);
   }
    
-  /* Блок, в котором появится Яндекс.Карта */
+
   #map-yandex {
 	position: relative;
 	z-index: 3;
@@ -1067,7 +1067,7 @@ footer a, footer p {
 	background-color: transparent;
   }
 
-  /* Индикатор загрузки, который показывается до загрузки карты */
+
 .loader {
 	position: absolute;
 	z-index: 15;
