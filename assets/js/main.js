@@ -27,13 +27,12 @@ var $root = $('html, body');
 $( document ).ready(function() {
   $('.top_slider').slick(
     {
-      lazyLoad: 'progressive',
-      initialSlide: 12
+      lazyLoad: 'progressive'
     }
   )
   $('.photo_slider').slick(
     {
-      initialSlide: 7,
+      initialSlide: 3,
       lazyLoad: 'progressive'
     }
   )
@@ -59,11 +58,15 @@ $('a[href^="#"]').click(function () {
 
 $('.eng').toggle()
 
+let counter = 0;
+
 $('#lang_eng').click(function (event) {
+  counter++;
   if (lang == 'rus') {
     lang = 'eng'
     $('.rus').toggle()
     $('.eng').toggle()
+    translateReview('eng')
     translateWidget('eng')
     $('#ourframe').attr('src', $('#ourframe').attr('src'))
     document.title = 'Provence Studios'
@@ -73,10 +76,12 @@ $('#lang_eng').click(function (event) {
 })
 
 $('#lang_rus').click(function (event) {
+  counter++;
   if (lang == 'eng') {
     lang = 'rus'
     $('.rus').toggle()
     $('.eng').toggle()
+    translateReview('rus')
     translateWidget('rus')
     $('#ourframe').attr('src', $('#ourframe').attr('src'))
     document.title = 'Студии Прованс'
@@ -324,12 +329,20 @@ function setCaretPosition(elemId, caretPos) {
   }
 }
 
+function translateReview(lang) {
+  if (lang == 'eng') {
+    rus['eabr-header-title'] = $('.eabr-header-title').text()
+    $('.eabr-header-title').text('What do those who have visited us say')
+  } else if(lang == 'rus') {
+    $('.eabr-header-title').text(rus['eabr-header-title'])
+  }
+}
+
 function translateWidget(to) {
 
   if (to == 'eng') {
 
-    rus['eabr-header-title'] = $('.eabr-header-title').text()
-    $('.eabr-header-title').text('What do those who have visited us say')
+
     rus['checkin'] = $("[for=rc-checkin]").html()
     $("[for=rc-checkin]").html('Сheck in&nbsp;')
     rus['checkout'] = $("[for=rc-checkout]").html()
@@ -342,7 +355,7 @@ function translateWidget(to) {
     translateFlat(lang)
     $(".rc-search_form__search_btn").text('Search') 
   }else if (to == 'rus') {
-    $('.eabr-header-title').text(rus['eabr-header-title'])
+
     $("[for=rc-checkin]").html(rus['checkin'])
     $("[for=rc-checkout]").html(rus['checkout'])
     $("[for=guests]").html(rus['guests'] )
@@ -459,6 +472,9 @@ function translateFlat(lang) {
 
 let bodyClass = new MutationObserver(function (mutations) {
   let list = document.body.classList
+  if (list.contains('modal-open')) {
+    loadBook();
+  }
   if (list.contains('rc-modal-open')) {
     setTimeout(function(){if (lang=='eng'){translateModal(lang)}}, 1000)
   }
@@ -644,7 +660,6 @@ function loadScript(url, callback){
  
 
 function checkMap() {
-  console.log(document.getElementById('navigation').getBoundingClientRect().y, document.documentElement.clientHeight)
   if (document.getElementById('navigation').getBoundingClientRect().y < document.documentElement.clientHeight) {
     
     if (!check_if_load) { // проверяем первый ли раз загружается Яндекс.Карта, если да, то загружаем
@@ -663,8 +678,71 @@ function checkMap() {
       }
   }
 }
+let ifReviewLoad = false;
+let ifWidgetLoad = false;
+function checkReview() {
+  if (lang == 'eng') {
+    translateReview('eng')
+  }
+  if (document.getElementById('review').getBoundingClientRect().y - document.documentElement.clientHeight < 1000 && !(ifReviewLoad)) {
+    var script = document.createElement("script");  
+    script.src = 'https://apps.elfsight.com/p/platform.js';
+    document.getElementsByTagName("head")[0].appendChild(script);
+    ifReviewLoad = true;
+    if (script.readyState){  // IE
+      script.onreadystatechange = function(){
+        if (script.readyState == "loaded" ||
+                script.readyState == "complete"){
+          script.onreadystatechange = null;
+  
+          // if (lang == 'eng') {
+          //   translateReview('eng')
+          // }
+        }
+      };
+    } else {  // Другие браузеры
+      script.onload = function(){
+        // if (lang == 'eng') {
+        //   translateReview('eng')
+        // }
+      };
+    }
+
+  }
+}
 
 function check() {
-  // checkReview()
+  checkReview()
   checkMap()
+}
+
+function loadBook() {
+  if (!(ifWidgetLoad)) {
+    var script = document.createElement("script"); 
+    ifWidgetLoad = true; 
+    script.src = "https://realtycalendar.ru/webpack/application.js?_t=6e31f1764bf6da92daa4";
+    document.getElementsByTagName("head")[0].appendChild(script);
+    if (script.readyState){  // IE
+      script.onreadystatechange = function(){
+        if (script.readyState == "loaded" ||
+                script.readyState == "complete"){
+          script.onreadystatechange = null;
+  
+          onWLoad()
+        }
+      };
+    } else {  // Другие браузеры
+      script.onload = function(){
+        onWLoad()
+      };
+    }
+  }
+
+}
+
+function onWLoad() {
+  RC_BOOKINGS_WIDGET.init('20a5dc372a20d19b4ac5d64264131222');
+  if (lang == 'eng') {
+    translateWidget('eng')
+  }
 }
