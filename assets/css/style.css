@@ -1123,3 +1123,9 @@ footer a, footer p {
 	  opacity: 1;
 	}
   }
+
+  @media screen and (max-width: 340px){
+	 .tel {
+    font-size: 16px;
+} 
+  }
