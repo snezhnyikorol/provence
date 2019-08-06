@@ -1024,6 +1024,12 @@ footer a, footer p {
 	display: none;
 }
 
+.eabr-header-title {
+    overflow: unset; 
+    text-overflow: unset; 
+    white-space: normal;
+}
+
 #play1, #play2 {
 	z-index: 1000;
 	position: absolute;
