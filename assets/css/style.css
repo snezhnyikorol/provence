@@ -1325,7 +1325,7 @@ footer a, footer p {
 	margin: 3em 0 2em 0;
 	overflow: hidden;
 	cursor: pointer;
-	background: url('../img/yandex-before-load.png') #ffffff no-repeat;
+	background: url('../img/yandex-before-load.jpg') #ffffff no-repeat;
 	background-position: center center;
 	background-size: cover;
 	box-shadow: 0 0 2em  0 rgba(0,0,0,.2);
