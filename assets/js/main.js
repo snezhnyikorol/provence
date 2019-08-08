@@ -13,6 +13,7 @@ $(window).scroll(function(){
 });
 
 let rus = {};
+rus['eabr-header-title'] = 'Что говорят те, кто побывал у нас';
 let menuState = false;
 var lang = 'rus'
 
@@ -326,7 +327,6 @@ function setCaretPosition(elemId, caretPos) {
 
 function translateReview(lang) {
   if (lang == 'eng') {
-    rus['eabr-header-title'] = $('.eabr-header-title').text()
     $('.eabr-header-title').text('What do those who have visited us say')
   } else if(lang == 'rus') {
     $('.eabr-header-title').text(rus['eabr-header-title'])
@@ -677,9 +677,7 @@ function checkMap() {
 let ifReviewLoad = false;
 let ifWidgetLoad = false;
 function checkReview() {
-  if (lang == 'eng') {
-    translateReview('eng')
-  }
+    translateReview(lang)
   if (document.getElementById('review').getBoundingClientRect().y - document.documentElement.clientHeight < 1000 && !(ifReviewLoad)) {
     var script = document.createElement("script");  
     script.src = 'https://apps.elfsight.com/p/platform.js';
